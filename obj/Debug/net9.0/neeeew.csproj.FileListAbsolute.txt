@@ -1,0 +1,14 @@
+C:\Users\MSI ThinGF63\Desktop\neeeew\bin\Debug\net9.0\neeeew.exe
+C:\Users\MSI ThinGF63\Desktop\neeeew\bin\Debug\net9.0\neeeew.deps.json
+C:\Users\MSI ThinGF63\Desktop\neeeew\bin\Debug\net9.0\neeeew.runtimeconfig.json
+C:\Users\MSI ThinGF63\Desktop\neeeew\bin\Debug\net9.0\neeeew.dll
+C:\Users\MSI ThinGF63\Desktop\neeeew\bin\Debug\net9.0\neeeew.pdb
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.AssemblyInfoInputs.cache
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.AssemblyInfo.cs
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.csproj.CoreCompileInputs.cache
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.dll
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\refint\neeeew.dll
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.pdb
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.genruntimeconfig.cache
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\ref\neeeew.dll
