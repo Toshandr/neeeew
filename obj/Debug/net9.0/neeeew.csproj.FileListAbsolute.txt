@@ -12,3 +12,4 @@ C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\refint\neeeew.dll
 C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.pdb
 C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.genruntimeconfig.cache
 C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\ref\neeeew.dll
+C:\Users\MSI ThinGF63\Desktop\neeeew\obj\Debug\net9.0\neeeew.sourcelink.json
