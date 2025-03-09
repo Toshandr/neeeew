@@ -65,18 +65,18 @@ class Program
         try{
             Console.Write("\n Введите название файла или папки которое вы хотите скопировать: ");
             string? fileName = Console.ReadLine();
-            if(fileName != null && (Directory.Exists(request + @"\" + fileName) || File.Exists(request + @"\" + fileName))){ //проверка существует ли файл или папка
+            if(fileName != null && (Directory.Exists(Path.Combine(request, fileName)) || File.Exists(Path.Combine(request, fileName)))){ //проверка существует ли файл или папка
                 Console.Write("\n Введите абсолютный путь, куда вы хотите скопировать: ");
                 string? newFileplace = Console.ReadLine();
                 if(newFileplace != null && Directory.Exists(newFileplace)){ //проверка существует ли такой путь
                     if(Directory.Exists(request + @"\" + fileName)){ // копирование если объект - папка
-                        string newfullfolderpath = newFileplace + @"\" + fileName;
-                        string oldfullfolderpath = request + @"\" + fileName;
+                        string newfullfolderpath = Path.Combine(newFileplace, fileName);
+                        string oldfullfolderpath = Path.Combine(request, fileName);
                         recursionFolder(oldfullfolderpath, newfullfolderpath);
                         Console.WriteLine("Копирование выполнено успешно");
                     }
-                    if(File.Exists(request + @"\" + fileName)){ // копирование если объект - файл
-                        File.Copy(request + @"\" + fileName, newFileplace + @"\" + fileName);
+                    if(File.Exists(Path.Combine(request, fileName))){ // копирование если объект - файл
+                        File.Copy(Path.Combine(request, fileName), Path.Combine(newFileplace, fileName));
                         Console.WriteLine("Копирование выполнено успешно");
                     }
                 }
