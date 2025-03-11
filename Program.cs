@@ -26,7 +26,7 @@ class Program
 
             //ReadAll(request); 
             //CopyFiles(request);
-            FileInformation(request);
+            //FileInformation(request);
             //DeleteFiles(request);
         }
     }
