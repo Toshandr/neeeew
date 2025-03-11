@@ -24,8 +24,8 @@ class Program
             // Проба методов, чтобы проверить работу одного из них раскомментируйте нужный
 
 
-            readFirst(request);
-            readingDirectory(request); 
+            //readFirst(request);
+            //readingDirectory(request); 
             //copyFiles(request);
             //fileInformation(request);
             //deleteFiles(request);
