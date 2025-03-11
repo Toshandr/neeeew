@@ -137,7 +137,7 @@ class Program
                 }
                 if(Directory.Exists(Path.Combine(request, fileName))){ //проверяем существует ли такая папка
                     DirectoryInfo dir = new DirectoryInfo(Path.Combine(request, fileName));
-                    Console.WriteLine("Размер папки: " + dir.EnumerateFiles("", SearchOption.AllDirectories).Sum(fi => fi.Length)/1024 + "КБ"); //находим все файлы в каталоге и берём у каждого файла его размер
+                    Console.WriteLine("Размер папки: " + dir.EnumerateFiles("*", SearchOption.AllDirectories).Sum(fi => fi.Length)/1024 + "КБ"); //находим все файлы в каталоге и берём у каждого файла его размер
                     Console.WriteLine("Расширение: каталог");
                     Console.WriteLine("Абсолютный путь: " + dir.FullName);
                 }
