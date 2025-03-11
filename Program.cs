@@ -123,7 +123,7 @@ class Program
         }
     }
     public static void DeleteFiles(string request){//метод для удаления файла или папок
-            Console.Write("\nВведите название файла или папки которые вы хотите скопировать: ");
+            Console.Write("\nВведите название файла или папки которые вы хотите удалить: ");
             string? fileName = Console.ReadLine();
             if(fileName != null && (Directory.Exists(Path.Combine(request, fileName)) || File.Exists(Path.Combine(request, fileName)))){
                 if(Directory.Exists(Path.Combine(request, fileName))){
