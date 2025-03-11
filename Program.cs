@@ -122,7 +122,21 @@ class Program
             Console.WriteLine(ex.Message);
         }
     }
+    public static void DeleteFiles(string request){//метод для удаления файла или папок
+            Console.Write("\nВведите название файла или папки которые вы хотите скопировать: ");
+            string? fileName = Console.ReadLine();
+            if(fileName != null && (Directory.Exists(Path.Combine(request, fileName)) || File.Exists(Path.Combine(request, fileName)))){
+                if(Directory.Exists(Path.Combine(request, fileName))){
+                    Directory.Delete(Path.Combine(request, fileName), true);
+                    Console.WriteLine("Удаление выполнено успешно.");
+                }
+                if(File.Exists(Path.Combine(request, fileName))){
+                    File.Delete(Path.Combine(request, fileName));
+                    Console.WriteLine("Удаление выполнено успешно.");
+                }
+            }
 
+        }
 
 }
  
