@@ -24,27 +24,55 @@ class Program
             // Проба методов, чтобы проверить работу одного из них раскомментируйте нужный
 
 
-            //ReadAll(request); 
-            //CopyFiles(request);
-            //FileInformation(request);
-            //DeleteFiles(request);
+            readFirst(request);
+            readingDirectory(request); 
+            //copyFiles(request);
+            //fileInformation(request);
+            //deleteFiles(request);
         }
     }
     
 
 
-    public static void ReadAll(string path){ //метод для вывода всех файлов внутри директории
+    public static void readFirst(string path){ //метод для первого запуска
         Console.WriteLine();
         int colFiles = 0;
-        foreach(var i in Directory.GetDirectories(path)){
-            colFiles++;
-            Console.WriteLine($"{colFiles}. {i} \n");
+        if(Directory.Exists(path) && path != null){
+            foreach(var i in Directory.GetDirectories(path)){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
+            foreach(var i in Directory.GetFiles(path)){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
         }
-        foreach(var i in Directory.GetFiles(path)){
-            colFiles++;
-            Console.WriteLine($"{colFiles}. {i} \n");
+        else{
+            Console.WriteLine("Неккоректный ввод.");
         }
     }
+    public static void readingDirectory(string parentpath){
+        Console.Write("\nВведите название каталога в который хотите перейти: ");
+        string? dirname = Console.ReadLine();
+        if(dirname != null && Directory.Exists(Path.Combine(parentpath, dirname))){
+            int colFiles = 0;
+            foreach(var i in Directory.GetDirectories(Path.Combine(parentpath, dirname))){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
+            foreach(var i in Directory.GetFiles(Path.Combine(parentpath, dirname))){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
+        }
+        else{
+            Console.WriteLine("Неккоректный ввод.");
+        }
+
+    }
+    
+
+    //readingFile - будущая заготовка для считывание и изменения файла
 
     public static void recursionFolder(string sourceDir, string targetDir){ //метод для переноса католга целиком
         Directory.CreateDirectory(targetDir); //создаём в папке назаначения новую папку
@@ -65,7 +93,7 @@ class Program
             recursionFolder(dirPath, destSubDir); //повтороно вызываем метод но уже проходимся по подкаталогам
         }
     }
-    public static void CopyFiles(string request){ //метод для копирования файла или папки
+    public static void copyFiles(string request){ //метод для копирования файла или папки
         try{
             Console.Write("\nВведите название файла или папки которые вы хотите скопировать: ");
             string? fileName = Console.ReadLine();
@@ -96,7 +124,7 @@ class Program
             Console.WriteLine(ex.Message);
         }
     }
-    public static void FileInformation(string request){//метод для вывода основной информации
+    public static void fileInformation(string request){//метод для вывода основной информации
         try{
             Console.Write("\nВведите название файла о котором вы хотите узнать: ");
             string? fileName = Console.ReadLine();
@@ -122,7 +150,7 @@ class Program
             Console.WriteLine(ex.Message);
         }
     }
-    public static void DeleteFiles(string request){//метод для удаления файла или папок
+    public static void deleteFiles(string request){//метод для удаления файла или папок
             Console.Write("\nВведите название файла или папки которые вы хотите удалить: ");
             string? fileName = Console.ReadLine();
             if(fileName != null && (Directory.Exists(Path.Combine(request, fileName)) || File.Exists(Path.Combine(request, fileName)))){
