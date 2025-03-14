@@ -1,9 +1,12 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 
 namespace neeeew;
 
-
+//класс
 
 class Program
 {
@@ -16,25 +19,186 @@ class Program
 
     static void Main(string[] args)
     {
-        Console.Write("Введите абсолютный путь до папки с которой вы хотите начать работать: ");
-        string? request = Console.ReadLine();
-        if(request != null && Directory.Exists(request)){
+        Console.Clear();
+        string start = @"C:\Users\MSI ThinGF63\Desktop\neeeew\startingFolder";
+        StreamReader starting = new StreamReader(start);
+        string? request = "";
+        string? path = starting.ReadLine(); //тут путь из файла
+        starting.Close();
 
 
-            // Проба методов, чтобы проверить работу одного из них раскомментируйте нужный
-
-
-            //readFirst(request);
-            //readingDirectory(request); 
-            //copyFiles(request);
-            //fileInformation(request);
-            //deleteFiles(request);
+        if(path == null){
+            Console.Write("Введите абсолютный путь до папки с которой вы хотите начать работать: ");
+            request = Console.ReadLine();
+            if(Directory.Exists(request)){
+                readFirst(request);
+                Menu(request);
+            }
+            else{
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Такой директории нет, поверьте данные.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
         }
+        else{
+            Console.WriteLine("В прошлый раз ваша работа остановилась: " + path);
+            Console.WriteLine("Хотите продолжить оттуда?\nДа/Нет");
+            string? accept = Console.ReadLine();
+            if (accept!=null){
+                switch(accept.ToUpper()){
+                    case "ДА":
+                        readFirst(path);
+                        Menu(path);
+                        break;
+
+
+                    case "НЕТ":
+                        Console.Write("Введите абсолютный путь до папки с которой вы хотите начать работать: ");
+                        request = Console.ReadLine();
+                        if(request != null && Directory.Exists(request)){
+                            readFirst(request);
+                            Menu(request);
+                        };
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Неверный ввод.");
+                        Console.ResetColor();
+                        Console.ReadKey();
+                        break;
+                }
+            }
+            else{
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Пустой ввод.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
+
+        }   
     }
     
 
 
-    public static void readFirst(string path){ //метод для первого запуска
+    public static void Menu(string path){
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine("_______________________________________");
+        Console.WriteLine("|-------------Меню команд-------------|");
+        Console.WriteLine("_______________________________________");
+        Console.ResetColor();
+        Console.WriteLine("|-----1. Переход в другой каталог-----|");
+        Console.WriteLine("|--2. Переход в родительский каталог--|");
+        Console.WriteLine("|-----------3. Открыть папку----------|");
+        Console.WriteLine("|----------4. Копировать файл---------|");
+        Console.WriteLine("|-----------5. Удалить файл-----------|");
+        Console.WriteLine("|---------6. Информация о файле-------|");
+        Console.WriteLine("|-0. Выйти и сохранить последнюю папку|\n");
+        Console.WriteLine("");
+        Console.WriteLine("Сейчас мы тут: " + path);
+        Console.Write("Введите номер команды: ");
+        int? choice = 0;
+        try{
+            choice = Convert.ToInt32(Console.ReadLine());
+        }
+        catch(Exception ex){
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
+        }
+        if (choice != null){
+            switch(choice){
+                case 1:
+                    readFirst();
+                    break;
+                case 2:
+                    readingParent(path);
+                    break;
+                case 3:
+                    readingDirectory(path);
+                    break;
+                case 4:
+                    copyFiles(path);
+                    break;
+                case 5:
+                    deleteFiles(path);
+                    break;
+                case 6:
+                    fileInformation(path);
+                    break;
+                case 0:
+                    Save(path);
+                    Environment.Exit(0);
+                    break;
+                
+            }
+        }
+        else{
+            Console.WriteLine("Команда пустая.");
+        }
+    }
+
+
+    public static void readingParent(string parentpath){
+        try{
+            string main = Directory.GetParent(parentpath).FullName;
+            if(Directory.Exists(main)){
+                readFirst(main);
+                Menu(main);
+            }
+            else{
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Неверный ввод.");
+                Console.ResetColor();
+                Console.ReadKey();
+            }
+        }
+        catch(Exception ex){
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
+        }
+    }
+
+    public static void readFirst(){
+        Console.Clear(); //метод для перехода по абсолютному пути
+        Console.WriteLine();
+        Console.Write("Введите абсолютный путь до директории: ");
+        string? path = Console.ReadLine();
+        if(path != null && Directory.Exists(path)){
+            int colFiles = 0;
+            foreach(var i in Directory.GetDirectories(path)){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
+            foreach(var i in Directory.GetFiles(path)){
+                colFiles++;
+                Console.WriteLine($"{colFiles}. {i} \n");
+            }
+            if(colFiles == 0){
+                Console.WriteLine("Папка пуста");
+            }
+            Menu(path);
+            }
+        else{
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Неверный входные данные.");
+            Console.ResetColor();
+            Console.ReadKey();
+
+        }
+    }
+
+
+
+    public static void readFirst(string path){
+        Console.Clear(); //метод для перехода по абсолютному пути
         Console.WriteLine();
         int colFiles = 0;
         if(Directory.Exists(path) && path != null){
@@ -46,14 +210,29 @@ class Program
                 colFiles++;
                 Console.WriteLine($"{colFiles}. {i} \n");
             }
+            Menu(path);
         }
         else{
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Неккоректный ввод.");
+            Console.ResetColor();
         }
     }
-    public static void readingDirectory(string parentpath){
+
+    public static void Save(string path){
+        string start = @"C:\Users\MSI ThinGF63\Desktop\neeeew\startingFolder";
+        
+        using (StreamWriter writer = new StreamWriter(start, false))
+        {
+            writer.WriteAsync(path);
+            Console.WriteLine($"Путь успешно сохранён в файл: {start}");
+        }
+
+    }
+    public static void readingDirectory(string parentpath){ //просмотр всех файло директории
         Console.Write("\nВведите название каталога в который хотите перейти: ");
         string? dirname = Console.ReadLine();
+        Console.Clear();
         if(dirname != null && Directory.Exists(Path.Combine(parentpath, dirname))){
             int colFiles = 0;
             foreach(var i in Directory.GetDirectories(Path.Combine(parentpath, dirname))){
@@ -64,9 +243,19 @@ class Program
                 colFiles++;
                 Console.WriteLine($"{colFiles}. {i} \n");
             }
+            if(colFiles == 0){
+                Console.WriteLine("Пустая папка.");
+            }
+            Menu(Path.Combine(parentpath, dirname));
         }
         else{
-            Console.WriteLine("Неккоректный ввод.");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Проверьте ввод и убедитесь что это папка.");
+            Console.ResetColor();
+            Console.ReadKey();
+            Console.Clear();
+            readFirst(parentpath);
+            Menu(parentpath);
         }
 
     }
@@ -76,16 +265,12 @@ class Program
 
     public static void recursionFolder(string sourceDir, string targetDir){ //метод для переноса католга целиком
         Directory.CreateDirectory(targetDir); //создаём в папке назаначения новую папку
-
-        
         foreach (string filePath in Directory.GetFiles(sourceDir)) //из начальной папки берём все файлы
         {
             string fileName = Path.GetFileName(filePath); //берём имя файла
             string destFilePath = Path.Combine(targetDir, fileName); //прессуем имя файла и путь на новую папку - получаем путь до нового файла
             File.Copy(filePath, destFilePath, true); //переносим файлы в новую папку
         }
-
-        
         foreach (string dirPath in Directory.GetDirectories(sourceDir)) //берём все подкаталоги
         {
             string dirName = Path.GetFileName(dirPath); //берём имя каждой папки
@@ -111,17 +296,39 @@ class Program
                         File.Copy(Path.Combine(request, fileName), Path.Combine(newFileplace, fileName));
                         Console.WriteLine("Копирование выполнено успешно");
                     }
+                    Console.ReadKey();
+                    Console.Clear();
+                    readFirst(request);
+                    Menu(request);
                 }
                 else{
-                    Console.WriteLine("Такого каталога нет");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Такого каталога нет.");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    Console.Clear();
+                    readFirst(request);
+                    Menu(request);
                 }
             }
             else{
-                Console.WriteLine("Такого файла нет");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Такого файла нет.");
+                Console.ResetColor();
+                Console.ReadKey();
+                Console.Clear();
+                readFirst(request);
+                Menu(request);
             }
         }
         catch(Exception ex){
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
+            Console.Clear();
+            readFirst(request);
+            Menu(request);
         }
     }
     public static void fileInformation(string request){//метод для вывода основной информации
@@ -141,13 +348,23 @@ class Program
                     Console.WriteLine("Расширение: каталог");
                     Console.WriteLine("Абсолютный путь: " + dir.FullName);
                 }
+                Console.ReadKey();
+                Console.Clear();
+                readFirst(request);
+                Menu(request);
             }
             else{
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Такого файла нет.");
+                Console.ResetColor();
+                Console.ReadKey();
             }
         }
         catch(Exception ex){
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
+            Console.ResetColor();
+            Console.ReadKey();
         }
     }
     public static void deleteFiles(string request){//метод для удаления файла или папок
@@ -162,12 +379,20 @@ class Program
                     File.Delete(Path.Combine(request, fileName));
                     Console.WriteLine("Удаление выполнено успешно.");
                 }
+                Console.ReadKey();
+                Console.Clear();
+                readFirst(request);
+                Menu(request);
+            }
+            else{
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Проверьте ввод.");
+                Console.ResetColor();
+                Console.ReadKey();
+                Console.Clear();
+                readFirst(request);
+                Menu(request);
             }
 
         }
-
 }
- 
-
-
-
